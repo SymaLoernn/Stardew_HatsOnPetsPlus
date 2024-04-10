@@ -1,9 +1,10 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
 using StardewModdingAPI;
+using StardewValley;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -93,6 +94,7 @@ namespace HatsOnPetsPlus
                     hatOffset.X -= 4f;
                 }
 
+                __instance.hat.Value.draw(b, __instance.getLocalPosition(Game1.viewport) + hatOffset + new Vector2(30f, -42f), scale, 1f, horse_draw_layer, direction, useAnimalTexture: true);
 
                 return false;
             }
