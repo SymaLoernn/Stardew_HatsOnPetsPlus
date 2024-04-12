@@ -12,5 +12,13 @@ namespace HatsOnPetsPlus
         internal float? hatOffsetY = null;
         internal int? direction = null;
         internal float? scale = null;
+
+        public CustomHatPositionSprite(float? hatOffsetX, float? hatOffsetY, int? direction, float? scale)
+        {
+            this.hatOffsetX = hatOffsetX;
+            this.hatOffsetY = hatOffsetY;
+            this.direction = direction;
+            this.scale = scale;
+        }
     }
 }

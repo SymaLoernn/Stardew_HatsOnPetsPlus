@@ -19,6 +19,7 @@ namespace HatsOnPetsPlus
         public override void Entry(IModHelper helper)
         {
             PetHatsPatch.Initialize(this.Monitor);
+            PetHatsPatch.InitializeTestData();
             var harmony = new Harmony(this.ModManifest.UniqueID);
             harmony.Patch(
                 original: AccessTools.Method(typeof(StardewValley.Characters.Pet), nameof(StardewValley.Characters.Pet.drawHat)),
