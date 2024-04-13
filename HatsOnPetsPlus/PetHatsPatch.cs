@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Globalization;
 using static HatsOnPetsPlus.HOPPHelperFunctions;
+using StardewValley.Objects;
 
 namespace HatsOnPetsPlus
 {
@@ -110,6 +111,38 @@ namespace HatsOnPetsPlus
                 return true; // run original logic in case of exception
             }
             
+        }
+
+        internal static void CheckActionPostfix(StardewValley.Characters.Pet __instance, Farmer who)
+        {
+            try
+            {
+                Tuple<string, string> petTypeAndBreed = new Tuple<string, string>(__instance.petType.Value, __instance.whichBreed.Value);
+
+                // Mostly copied from the original game code, but check if the player is holding something and it's a hat
+                if (who.Items.Count > who.CurrentToolIndex && who.Items[who.CurrentToolIndex] != null && who.Items[who.CurrentToolIndex] is Hat)
+                {
+                    // Always let the player remove hats!!
+                    if (__instance.hat.Value != null)
+                    {
+                        Game1.createItemDebris(__instance.hat.Value, __instance.Position, __instance.FacingDirection);
+                        __instance.hat.Value = null;
+                    }
+                    // If there's hat offset data for that animal and breed, then let the player put a hat on
+                    else if (customPetsDict.TryGetValue(petTypeAndBreed, out _))
+                    {
+                        Hat hatItem = who.Items[who.CurrentToolIndex] as Hat;
+                        who.Items[who.CurrentToolIndex] = null;
+                        __instance.hat.Value = hatItem;
+                        Game1.playSound("dirtyHit");
+                    }
+                    __instance.mutex.ReleaseLock();
+                }
+            }
+            catch (Exception e)
+            {
+                Monitor.Log($"Failed in {nameof(CheckActionPostfix)}:\n{e}", LogLevel.Error);
+            }
         }
 
     }

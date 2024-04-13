@@ -32,6 +32,9 @@ namespace HatsOnPetsPlus
             harmony.Patch(
                 original: AccessTools.Method(typeof(StardewValley.Characters.Pet), nameof(StardewValley.Characters.Pet.drawHat)),
                 prefix: new HarmonyMethod(typeof(PetHatsPatch), nameof(PetHatsPatch.DrawHatPrefix)));
+            harmony.Patch(
+                original: AccessTools.Method(typeof(StardewValley.Characters.Pet), nameof(StardewValley.Characters.Pet.checkAction)),
+                postfix: new HarmonyMethod(typeof(PetHatsPatch), nameof(PetHatsPatch.CheckActionPostfix)));
         }
 
         private void OnGameLaunched(object sender, SaveLoadedEventArgs e)
