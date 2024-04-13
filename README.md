@@ -37,6 +37,6 @@ Once everything above is done, maybe start a second project to make an online or
 
 ## Credits
 
-Mod author : Syma
-Mod contributor : Elizabethcd
-For their help : Elizabethcd, the wonderful people of the Stardew Valley modding channel on the official Discord server
+Mod author : Syma  
+Mod contributor : Elizabethcd  
+For their help : Elizabethcd, the wonderful people of the Stardew Valley modding channel on the official Discord server  
