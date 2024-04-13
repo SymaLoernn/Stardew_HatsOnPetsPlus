@@ -53,7 +53,7 @@ namespace HatsOnPetsPlus
                 PetData customPet;
                 if (!customPetsDict.TryGetValue(petTypeAndBreed, out customPet))
                 {
-                    Monitor.Log("No modded data found for this pet ["+ petTypeAndBreed +"], defaulting to vanilla logic", LogLevel.Debug);
+                    //Monitor.Log("No modded data found for this pet ["+ petTypeAndBreed +"], defaulting to vanilla logic", LogLevel.Debug);
                     return true;
                 }
 
@@ -65,11 +65,11 @@ namespace HatsOnPetsPlus
                     customPet.sprites.TryGetValue(new Tuple<int, bool>(__instance.Sprite.currentFrame, flipped), out customHatData)
                    )
                 {
-                    Monitor.Log("No modded data found for this sprite on this otherwise custom pet, defaulting to vanilla logic", LogLevel.Debug);
+                    //Monitor.Log("No modded data found for this sprite on this otherwise custom pet, defaulting to vanilla logic", LogLevel.Debug);
                     return true;
                 }
 
-                Monitor.Log("Modded data found for this pet and sprite, using custom logic", LogLevel.Debug);
+                //Monitor.Log("Modded data found for this pet and sprite, using custom logic", LogLevel.Debug);
 
                 Vector2 hatOffset = Vector2.Zero;
                 hatOffset *= 4f;
@@ -93,7 +93,7 @@ namespace HatsOnPetsPlus
 
                 hatOffset += shake; 
 
-                // Not sure if the following lines from the vanilla logic should be implemented or not, needs testing
+                // Not sure if the following lines from the vanilla logic should be implemented or not
                 // In my opinion, it makes it more confusing so I'll leave it commented for now
                 //if (flipped)
                 //{

@@ -2,7 +2,7 @@
   "Name": "Hats on Pets Plus",
   "Author": "Syma",
   "Version": "0.0.1",
-  "Description": "An original Stardew Valley mod that aims to let modders correctly place hats on their custom pets",
+  "Description": "A Stardew Valley framework that aims to let modders correctly place hats on their custom pets",
   "UniqueID": "Syma.HatsOnPetsPlus",
   "EntryDll": "HatsOnPetsPlus.dll",
   "MinimumApiVersion": "3.0.0",

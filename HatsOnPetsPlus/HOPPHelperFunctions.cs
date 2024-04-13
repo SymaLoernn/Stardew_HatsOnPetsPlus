@@ -15,7 +15,7 @@ namespace HatsOnPetsPlus
 
         public class ExternalPetModData
         {
-            // main types are "Dog", "Cat", "Turtle"
+            // main vanilla types are "Dog", "Cat", "Turtle"
             public string Type { get; set; }
 
             // breeds are usually numbered 0 to 4, except for turtles that are 0 and 1 only
@@ -48,14 +48,12 @@ namespace HatsOnPetsPlus
 
         internal static void LoadCustomPetMods()
         {
-            // Data struct : Dictionary<String, CustomHatData[]>
-            // String key is the mod name (ex : "Syma.MyPet")
             var dict = Helper.GameContent.Load<Dictionary<string, ExternalPetModData[]>>(ModEntry.modContentPath);
-            Monitor.Log("HOPP Init : "+ dict.Count  +" mod(s) found", LogLevel.Debug);
+            Monitor.Log("HOPP Init : "+ dict.Count  +" mod(s) found", LogLevel.Trace);
             foreach (KeyValuePair<string, ExternalPetModData[]> entry in dict)
             {
                 var moddedPets = entry.Value as ExternalPetModData[];
-                Monitor.Log("HOPP Init : Mod " + entry.Key + " loading, " + moddedPets.Length + " modded pets found", LogLevel.Debug);
+                Monitor.Log("HOPP Init : Mod " + entry.Key + " loading, " + moddedPets.Length + " modded pets found", LogLevel.Trace);
                 foreach (ExternalPetModData moddedPet in moddedPets)
                 {
                     PetHatsPatch.addPetToDictionnary(moddedPet);
@@ -72,9 +70,10 @@ namespace HatsOnPetsPlus
         }
 
 
+        // TODO Archive or remove this test code later
         internal static void InitializeTestData()
         {
-            //Regex for transforming test to json (without checking for flipped) : 
+            //Regex for transforming this test data to json (without checking for flipped) : 
             //Select : ([\d.\-]*);([\d.\-]*);([\d.\-]*);([\d.\-]*);([\d.\-]*);
             //Replace : {\n"SpriteId":$1,\n"HatOffsetX":$2,\n"HatOffsetY":$3,\n"Direction":$4,\n"Scale":$5,\n"Flipped":false\n},
             String testData = @"0;0;20;2;1.4;

@@ -12,6 +12,7 @@ namespace HatsOnPetsPlus
     internal sealed class ModEntry : Mod
     {
         public const string modContentPath = "Syma.HatsOnPetsPlus/CustomPetData";
+        IModHelper helper;
         /*********
         ** Public methods
         *********/
@@ -19,17 +20,23 @@ namespace HatsOnPetsPlus
         /// <param name="helper">Provides simplified APIs for writing mods.</param>
         public override void Entry(IModHelper helper)
         {
+            this.helper = helper;
             helper.Events.Content.AssetRequested += this.OnAssetRequested;
 
-            HOPPHelperFunctions.Initialize(this.Monitor, helper);
+            helper.Events.GameLoop.SaveLoaded += this.OnGameLaunched;
 
-            // Test data for Goomy
+            // Test data for Goomy - TODO archive or remove it later ?
             // HOPPHelperFunctions.InitializeTestData();
 
             var harmony = new Harmony(this.ModManifest.UniqueID);
             harmony.Patch(
                 original: AccessTools.Method(typeof(StardewValley.Characters.Pet), nameof(StardewValley.Characters.Pet.drawHat)),
                 prefix: new HarmonyMethod(typeof(PetHatsPatch), nameof(PetHatsPatch.DrawHatPrefix)));
+        }
+
+        private void OnGameLaunched(object sender, SaveLoadedEventArgs e)
+        {
+            HOPPHelperFunctions.Initialize(this.Monitor, helper);
         }
 
         private void OnAssetRequested(object sender, AssetRequestedEventArgs e)
