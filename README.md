@@ -1,14 +1,16 @@
 # Stardew_HatsOnPetsPlus
-An original Stardew Valley mod that aims to let modders correctly place hats on their custom pets
+A Stardew Valley framework that aims to let modders place hats on their custom pets
 
 ## Curent TODO list
-- Let player add hats on pets other than dogs and cats (vanilla or modded), need to overwrite the condition on line 621 from the Pets.cs file 
-- Add a way to set default sprite position for a pet/breed
+
+- Add a way to set a default sprite position for a pet/breed
 - Clean up the code (remove test code, maybe move classes in subfolders, etc...)
 - Figure out the update key thing from SMAPI
-- Maybe add custom hat sprite data for turtles ?
 - Make a better README to explain how to add sprite data with content patcher
-- Make a Nexus Mod Page to make the mod public once it's complete
+- Make a Nexus Mod Page to make the mod public once it's complete (maybe contact an artist to make a banner)
+- (Bonus) Provide a full ContentPatcher json example for vanilla cats and/or dogs (could be useful as a template)
+
+Once everything above is done, maybe start a second project to make an online or downloadable tool for modders to make it easy to create custom hat data (for example by loading a sprite sheet and placing a hat on every frame) 
 
 ### JSON sprite data information (not final but shouldn't change much)
 
@@ -32,3 +34,9 @@ An original Stardew Valley mod that aims to let modders correctly place hats on 
  {...}  // Repeat everything above if your mod add/replace multiple pets/breeds
 }
 ```
+
+## Credits
+
+Mod author : Syma
+Mod contributor : Elizabethcd
+For their help : Elizabethcd, the wonderful people of the Stardew Valley modding channel on the official Discord server
