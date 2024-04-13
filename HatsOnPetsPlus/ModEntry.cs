@@ -11,6 +11,7 @@ namespace HatsOnPetsPlus
     /// <summary>The mod entry point.</summary>
     internal sealed class ModEntry : Mod
     {
+        public const string modContentPath = "Syma.HatsOnPetsPlus/CustomHatData";
         /*********
         ** Public methods
         *********/
@@ -18,8 +19,11 @@ namespace HatsOnPetsPlus
         /// <param name="helper">Provides simplified APIs for writing mods.</param>
         public override void Entry(IModHelper helper)
         {
-            PetHatsPatch.Initialize(this.Monitor);
+            HOPPHelperFunctions.Initialize(this.Monitor, helper);
+
+            // Test data for Goomy
             HOPPHelperFunctions.InitializeTestData();
+
             var harmony = new Harmony(this.ModManifest.UniqueID);
             harmony.Patch(
                 original: AccessTools.Method(typeof(StardewValley.Characters.Pet), nameof(StardewValley.Characters.Pet.drawHat)),

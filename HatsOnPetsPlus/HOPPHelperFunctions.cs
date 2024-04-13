@@ -1,4 +1,6 @@
-﻿using System;
+﻿using StardewModdingAPI;
+using StardewValley;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -9,6 +11,56 @@ namespace HatsOnPetsPlus
 {
     internal class HOPPHelperFunctions
     {
+
+        public class ExternalPetModData
+        {
+            // main types are "Dog", "Cat", "Turtle"
+            public string type { get; set; }
+
+            // breeds are usually numbered 0 to 4, except for turtles that are 0 and 1 only
+            public string breedId { get; set; }
+
+            public ExternalSpriteModData[] sprites { get; set; }
+        }
+
+        public class ExternalSpriteModData
+        {
+            public int spriteId { get; set; }
+            public float? hatOffsetX { get; set; }
+            public float? hatOffsetY { get; set; }
+            public int? direction { get; set; }
+            public float? scale { get; set; }
+            public bool? flipped { get; set; }
+        }
+
+        private static IMonitor Monitor;
+        private static IModHelper Helper;
+
+        internal static void Initialize(IMonitor monitor, IModHelper helper)
+        {
+            Monitor = monitor;
+            Helper = helper;
+
+            PetHatsPatch.Initialize(Monitor);
+        }
+
+        internal static void CustomPetInitialLoad()
+        {
+            // Data struct : Dictionary<String, CustomHatData[]>
+            // String key is the mod name (ex : "Syma.MyPet")
+            // CustomHatData is the data for a single sprite (including spriteId, (opt) hatOffsetX, (opt) hatOffsetY, (opt) direction, (opt) scale, (opt) flipped)
+            // Each modded pet is represented by an Array of CustomHatData
+            var dict = Helper.GameContent.Load<Dictionary<string, ExternalPetModData[]>>(ModEntry.modContentPath);
+            foreach(KeyValuePair<string, ExternalPetModData[]> entry in dict)
+            {
+                var moddedPets = entry.Value as ExternalPetModData[];
+                foreach(ExternalPetModData moddedPet in moddedPets)
+                {
+                    PetHatsPatch.addPetToDictionnary(moddedPet);
+                }
+            }
+        }
+
 
         internal static void InitializeTestData()
         {
@@ -61,7 +113,7 @@ namespace HatsOnPetsPlus
                 int? direction = null;
                 float? scale = null;
                 bool flipped = false;
-                CustomHatPositionPet testPet = new CustomHatPositionPet();
+                PetData testPet = new CustomHatPositionPet();
                 while ((line = reader.ReadLine()) != null)
                 {
                     string[] data = line.Split(';');
@@ -80,7 +132,7 @@ namespace HatsOnPetsPlus
                     // Sixth is either nothing or f for flipped
                     flipped = (data.Length > 5 && data[5].Equals("f"));
 
-                    CustomHatPositionSprite sprite = new CustomHatPositionSprite(hatOffsetX, hatOffsetY, direction, scale);
+                    SpriteData sprite = new SpriteData(hatOffsetX, hatOffsetY, direction, scale);
                     testPet.sprites[new Tuple<int, bool>(spriteId, flipped)] = sprite;
                 }
                 PetHatsPatch.addPetToDictionnary("Cat", "3", testPet);

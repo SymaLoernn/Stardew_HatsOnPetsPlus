@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Globalization;
+using static HatsOnPetsPlus.HOPPHelperFunctions;
 
 namespace HatsOnPetsPlus
 {
@@ -15,14 +16,20 @@ namespace HatsOnPetsPlus
     {
 
         private static IMonitor Monitor;
-        public static Dictionary<Tuple<string, string>, CustomHatPositionPet> customPetsDict = new Dictionary<Tuple<string, string>, CustomHatPositionPet>();
+        public static Dictionary<Tuple<string, string>, PetData> customPetsDict = new Dictionary<Tuple<string, string>, PetData>();
 
         internal static void Initialize(IMonitor monitor)
         {
             Monitor = monitor;
         }
 
-        public static void addPetToDictionnary(string petType, string petBreed, CustomHatPositionPet pet)
+        public static void addPetToDictionnary(ExternalPetModData moddedPet)
+        {
+            addPetToDictionnary(moddedPet.type, moddedPet.breedId, new PetData(moddedPet.sprites));
+            
+        }
+
+        public static void addPetToDictionnary(string petType, string petBreed, PetData pet)
         {
             customPetsDict[new Tuple<string, string>(petType, petBreed)] = pet;
         }
@@ -31,7 +38,7 @@ namespace HatsOnPetsPlus
         {
             try
             {
-                Monitor.Log("Entered draw hat prefix function", LogLevel.Debug);
+                //Monitor.Log("Entered draw hat prefix function", LogLevel.Debug);
 
                 if (__instance.hat.Value == null)
                 {
@@ -43,26 +50,26 @@ namespace HatsOnPetsPlus
                 // Check if the pet has custom hat data, if not default to vanilla logic
 
                 Tuple<string, string> petTypeAndBreed = new Tuple<string, string>(__instance.petType, __instance.whichBreed);
-                CustomHatPositionPet customPet;
+                PetData customPet;
                 if (!customPetsDict.TryGetValue(petTypeAndBreed, out customPet))
                 {
-                    Monitor.Log("No modded data found for this pet ["+ petTypeAndBreed +"], defaulting to vanilla logic", LogLevel.Debug);
+                    //Monitor.Log("No modded data found for this pet ["+ petTypeAndBreed +"], defaulting to vanilla logic", LogLevel.Debug);
                     return true;
                 }
 
                 // Check if the specific sprite has custom data, if not default to vanilla logic  <-- Debatable if it should work like that
 
                 bool flipped = __instance.flip || (__instance.sprite.Value.CurrentAnimation != null && __instance.sprite.Value.CurrentAnimation[__instance.sprite.Value.currentAnimationIndex].flip);
-                CustomHatPositionSprite customHatData;
+                SpriteData customHatData;
                 if (!
                     customPet.sprites.TryGetValue(new Tuple<int, bool>(__instance.Sprite.currentFrame, flipped), out customHatData)
                    )
                 {
-                    Monitor.Log("No modded data found for this sprite on this otherwise custom pet, defaulting to vanilla logic", LogLevel.Debug);
+                    //Monitor.Log("No modded data found for this sprite on this otherwise custom pet, defaulting to vanilla logic", LogLevel.Debug);
                     return true;
                 }
 
-                Monitor.Log("Modded data found for this pet and sprite, using custom logic", LogLevel.Debug);
+                //Monitor.Log("Modded data found for this pet and sprite, using custom logic", LogLevel.Debug);
 
                 Vector2 hatOffset = Vector2.Zero;
                 hatOffset *= 4f;
