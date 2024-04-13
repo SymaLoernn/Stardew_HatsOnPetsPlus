@@ -1,4 +1,5 @@
 ﻿using StardewModdingAPI;
+using StardewModdingAPI.Events;
 using StardewValley;
 using System;
 using System.Collections.Generic;
@@ -15,22 +16,22 @@ namespace HatsOnPetsPlus
         public class ExternalPetModData
         {
             // main types are "Dog", "Cat", "Turtle"
-            public string type { get; set; }
+            public string Type { get; set; }
 
             // breeds are usually numbered 0 to 4, except for turtles that are 0 and 1 only
-            public string breedId { get; set; }
+            public string BreedId { get; set; }
 
-            public ExternalSpriteModData[] sprites { get; set; }
+            public ExternalSpriteModData[] Sprites { get; set; }
         }
 
         public class ExternalSpriteModData
         {
-            public int spriteId { get; set; }
-            public float? hatOffsetX { get; set; }
-            public float? hatOffsetY { get; set; }
-            public int? direction { get; set; }
-            public float? scale { get; set; }
-            public bool? flipped { get; set; }
+            public int SpriteId { get; set; }
+            public float? HatOffsetX { get; set; }
+            public float? HatOffsetY { get; set; }
+            public int? Direction { get; set; }
+            public float? Scale { get; set; }
+            public bool? Flipped { get; set; }
         }
 
         private static IMonitor Monitor;
@@ -42,28 +43,40 @@ namespace HatsOnPetsPlus
             Helper = helper;
 
             PetHatsPatch.Initialize(Monitor);
+            LoadCustomPetMods();
         }
 
-        internal static void CustomPetInitialLoad()
+        internal static void LoadCustomPetMods()
         {
             // Data struct : Dictionary<String, CustomHatData[]>
             // String key is the mod name (ex : "Syma.MyPet")
-            // CustomHatData is the data for a single sprite (including spriteId, (opt) hatOffsetX, (opt) hatOffsetY, (opt) direction, (opt) scale, (opt) flipped)
-            // Each modded pet is represented by an Array of CustomHatData
             var dict = Helper.GameContent.Load<Dictionary<string, ExternalPetModData[]>>(ModEntry.modContentPath);
-            foreach(KeyValuePair<string, ExternalPetModData[]> entry in dict)
+            Monitor.Log("HOPP Init : "+ dict.Count  +" mod(s) found", LogLevel.Debug);
+            foreach (KeyValuePair<string, ExternalPetModData[]> entry in dict)
             {
                 var moddedPets = entry.Value as ExternalPetModData[];
-                foreach(ExternalPetModData moddedPet in moddedPets)
+                Monitor.Log("HOPP Init : Mod " + entry.Key + " loading, " + moddedPets.Length + " modded pets found", LogLevel.Debug);
+                foreach (ExternalPetModData moddedPet in moddedPets)
                 {
                     PetHatsPatch.addPetToDictionnary(moddedPet);
                 }
             }
         }
 
+        internal static void Content_AssetRequested(AssetRequestedEventArgs e)
+        {
+            if (e.NameWithoutLocale.IsEquivalentTo(ModEntry.modContentPath))
+            {
+                e.LoadFrom(() => new Dictionary<string, ExternalPetModData[]>(), AssetLoadPriority.Exclusive);
+            }
+        }
+
 
         internal static void InitializeTestData()
         {
+            //Regex for transforming test to json (without checking for flipped) : 
+            //Select : ([\d.\-]*);([\d.\-]*);([\d.\-]*);([\d.\-]*);([\d.\-]*);
+            //Replace : {\n"SpriteId":$1,\n"HatOffsetX":$2,\n"HatOffsetY":$3,\n"Direction":$4,\n"Scale":$5,\n"Flipped":false\n},
             String testData = @"0;0;20;2;1.4;
 1;0;24;2;1.4;
 2;0;20;2;1.4;
@@ -113,7 +126,7 @@ namespace HatsOnPetsPlus
                 int? direction = null;
                 float? scale = null;
                 bool flipped = false;
-                PetData testPet = new CustomHatPositionPet();
+                PetData testPet = new PetData();
                 while ((line = reader.ReadLine()) != null)
                 {
                     string[] data = line.Split(';');

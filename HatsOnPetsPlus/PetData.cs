@@ -10,12 +10,13 @@ namespace HatsOnPetsPlus
 {
     internal class PetData
     {
+        public PetData() { }
 
         public PetData(ExternalSpriteModData[] externalSprites) {
             foreach (ExternalSpriteModData externalSprite in externalSprites)
             {
-                SpriteData internalSprite = new SpriteData(externalSprite.hatOffsetX, externalSprite.hatOffsetY, externalSprite.direction, externalSprite.scale);
-                addSprite(externalSprite.spriteId, externalSprite.flipped, internalSprite);
+                SpriteData internalSprite = new SpriteData(externalSprite.HatOffsetX, externalSprite.HatOffsetY, externalSprite.Direction, externalSprite.Scale);
+                addSprite(externalSprite.SpriteId, externalSprite.Flipped, internalSprite);
             }
         }
 
