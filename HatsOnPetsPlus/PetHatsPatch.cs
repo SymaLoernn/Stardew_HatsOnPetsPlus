@@ -144,7 +144,8 @@ namespace HatsOnPetsPlus
                         __instance.hat.Value = null;
                     }
                     // If there's hat offset data for that animal and breed, then let the player put a hat on
-                    else if (customPetsDict.TryGetValue(petTypeAndBreed, out _))
+                    // Cats and Dogs are already covered in the vanilla code, filtering them out to prevent double actions
+                    else if (__instance.petType != "Cat" && __instance.petType != "Dog" && customPetsDict.TryGetValue(petTypeAndBreed, out _))
                     {
                         Hat hatItem = who.Items[who.CurrentToolIndex] as Hat;
                         who.Items[who.CurrentToolIndex] = null;
