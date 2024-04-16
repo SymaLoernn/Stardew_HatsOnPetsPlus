@@ -39,7 +39,7 @@ namespace HatsOnPetsPlus
         {
             try
             {
-                Monitor.Log("Entered draw hat prefix function", LogLevel.Debug);
+                //Monitor.Log("Entered draw hat prefix function", LogLevel.Debug);
 
                 if (__instance.hat.Value == null)
                 {
@@ -61,7 +61,7 @@ namespace HatsOnPetsPlus
                 // Check if this sprite has custom data, if not use default data, or default to vanilla logic if there is no usable data
 
                 bool flipped = __instance.flip || (__instance.sprite.Value.CurrentAnimation != null && __instance.sprite.Value.CurrentAnimation[__instance.sprite.Value.currentAnimationIndex].flip);
-                SpriteData customHatData;
+                SpriteData? customHatData;
                 if (!
                     customPet.sprites.TryGetValue(new Tuple<int, bool>(__instance.Sprite.currentFrame, flipped), out customHatData)
                    )

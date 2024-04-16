@@ -1,0 +1,11 @@
+{
+	"Name" : "Test mod for HOPP",
+	"Author" : "Syma",
+	"Version" : "0.0.1",
+	"Description" : "A test mod",
+	"UniqueID" : "Syma.HOPPTest",
+	"UpdateKeys": [],
+	"ContentPackFor": {
+		"UniqueID": "Pathoschild.ContentPatcher"
+	}
+}

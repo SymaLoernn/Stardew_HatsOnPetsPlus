@@ -1,0 +1,28 @@
+{
+	"Format":"2.0.5",
+	"Changes":[
+		{
+			"Action":"EditData",
+			"Target":"Syma.HatsOnPetsPlus/CustomPetData",
+			"Entries":{
+				"testMod.testMod":[
+					{
+						"Type":"Cat",
+						"BreedId":"3",
+						"Sprites":[
+							{
+								"SpriteId":0,
+								"HatOffsetX":0,
+								"HatOffsetY":20,
+								"Direction":2,
+								"Scale":0,
+								"Flipped":false,
+								"Default":true
+							}
+						]
+					}
+				]
+			}
+		}
+	]
+}

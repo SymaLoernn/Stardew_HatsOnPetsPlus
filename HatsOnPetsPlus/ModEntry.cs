@@ -23,10 +23,7 @@ namespace HatsOnPetsPlus
             this.helper = helper;
             helper.Events.Content.AssetRequested += this.OnAssetRequested;
 
-            helper.Events.GameLoop.SaveLoaded += this.OnGameLaunched;
-
-            // Test data for Goomy - TODO archive or remove it later ?
-            // HOPPHelperFunctions.InitializeTestData();
+            helper.Events.GameLoop.SaveLoaded += this.OnSaveLoaded;
 
             var harmony = new Harmony(this.ModManifest.UniqueID);
             harmony.Patch(
@@ -37,7 +34,7 @@ namespace HatsOnPetsPlus
                 postfix: new HarmonyMethod(typeof(PetHatsPatch), nameof(PetHatsPatch.CheckActionPostfix)));
         }
 
-        private void OnGameLaunched(object sender, SaveLoadedEventArgs e)
+        private void OnSaveLoaded(object sender, SaveLoadedEventArgs e)
         {
             HOPPHelperFunctions.Initialize(this.Monitor, helper);
         }
