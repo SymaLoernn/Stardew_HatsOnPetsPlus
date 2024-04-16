@@ -15,8 +15,13 @@ namespace HatsOnPetsPlus
         public PetData(ExternalSpriteModData[] externalSprites) {
             foreach (ExternalSpriteModData externalSprite in externalSprites)
             {
-                SpriteData internalSprite = new SpriteData(externalSprite.HatOffsetX, externalSprite.HatOffsetY, externalSprite.Direction, externalSprite.Scale);
+                SpriteData internalSprite = new SpriteData(externalSprite.HatOffsetX, externalSprite.HatOffsetY, externalSprite.Direction, externalSprite.Scale, externalSprite.DoNotDrawHat);
                 addSprite(externalSprite.SpriteId, externalSprite.Flipped, internalSprite);
+                
+                if (externalSprite.Default.HasValue && externalSprite.Default.Value)
+                {
+                    defaultSprite = internalSprite;
+                }
             }
         }
 
@@ -30,5 +35,7 @@ namespace HatsOnPetsPlus
         // The first part (int) is the sprite ID (0 for the top left sprite on the sprite sheet, then its numbered left to right and top to bottom)
         // The second part of the key (bool) is the "flipped" value of the sprite : true is flipped, false isn't 
         internal Dictionary<Tuple<int, bool>, SpriteData> sprites = new Dictionary<Tuple<int, bool>, SpriteData>();
+
+        internal SpriteData? defaultSprite;
     }
 }

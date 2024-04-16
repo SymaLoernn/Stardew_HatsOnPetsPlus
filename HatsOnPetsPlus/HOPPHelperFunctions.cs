@@ -32,6 +32,8 @@ namespace HatsOnPetsPlus
             public int? Direction { get; set; }
             public float? Scale { get; set; }
             public bool? Flipped { get; set; }
+            public bool? Default { get; set; }
+            public bool? DoNotDrawHat { get; set; }
         }
 
         private static IMonitor Monitor;
@@ -144,7 +146,7 @@ namespace HatsOnPetsPlus
                     // Sixth is either nothing or f for flipped
                     flipped = (data.Length > 5 && data[5].Equals("f"));
 
-                    SpriteData sprite = new SpriteData(hatOffsetX, hatOffsetY, direction, scale);
+                    SpriteData sprite = new SpriteData(hatOffsetX, hatOffsetY, direction, scale, null);
                     testPet.sprites[new Tuple<int, bool>(spriteId, flipped)] = sprite;
                 }
                 PetHatsPatch.addPetToDictionnary("Cat", "3", testPet);

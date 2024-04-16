@@ -58,7 +58,7 @@ namespace HatsOnPetsPlus
                     return true;
                 }
 
-                // Check if the specific sprite has custom data, if not default to vanilla logic  <-- Debatable if it should work like that
+                // Check if this sprite has custom data, if not use default data, or default to vanilla logic if there is no usable data
 
                 bool flipped = __instance.flip || (__instance.sprite.Value.CurrentAnimation != null && __instance.sprite.Value.CurrentAnimation[__instance.sprite.Value.currentAnimationIndex].flip);
                 SpriteData customHatData;
@@ -66,11 +66,26 @@ namespace HatsOnPetsPlus
                     customPet.sprites.TryGetValue(new Tuple<int, bool>(__instance.Sprite.currentFrame, flipped), out customHatData)
                    )
                 {
-                    //Monitor.Log("No modded data found for this sprite on this otherwise custom pet, defaulting to vanilla logic", LogLevel.Debug);
-                    return true;
+                    if (customPet.defaultSprite == null)
+                    {
+                        //Monitor.Log("No modded data found for this sprite on this otherwise custom pet and no default data, defaulting to vanilla logic", LogLevel.Debug);
+                        return true;
+                    } else
+                    {
+                        //Monitor.Log("No modded data found for this sprite, using default data for this custom pet, LogLevel.Debug);
+                        customHatData = customPet.defaultSprite;
+                    }
+                    
                 }
 
-                //Monitor.Log("Modded data found for this pet and sprite, using custom logic", LogLevel.Debug);
+                // Check if DoNotDraw flag is set
+                if (customHatData.doNotDraw.HasValue && customHatData.doNotDraw.Value)
+                {
+                    return false;
+                }
+
+
+                //Monitor.Log("Custom data found, starting logic for drawing a hat on a custom pet", LogLevel.Debug);
 
                 Vector2 hatOffset = Vector2.Zero;
                 hatOffset *= 4f;
