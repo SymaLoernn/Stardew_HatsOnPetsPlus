@@ -3,7 +3,6 @@ A Stardew Valley framework that aims to let modders place hats on their custom p
 
 ## Curent TODO list
 
-- Clean up the code (remove test code, maybe move classes in subfolders, etc...)
 - Figure out the update key thing from SMAPI
 - Make a better README to explain how to add sprite data with content patcher
 - Make a Nexus Mod Page to make the mod public once it's complete (maybe contact an artist to make a banner)
