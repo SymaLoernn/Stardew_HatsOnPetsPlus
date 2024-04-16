@@ -3,7 +3,6 @@ A Stardew Valley framework that aims to let modders place hats on their custom p
 
 ## Curent TODO list
 
-- Figure out the update key thing from SMAPI
 - Make a better README to explain how to add sprite data with content patcher
 - Make a Nexus Mod Page to make the mod public once it's complete (maybe contact an artist to make a banner)
 - (Bonus) Provide a full ContentPatcher json example for vanilla cats and/or dogs (could be useful as a template)
