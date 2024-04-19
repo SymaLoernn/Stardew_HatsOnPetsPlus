@@ -134,9 +134,21 @@ When choosing which data to use, Hats On Pets Plus will check things in this ord
 
 1. Is this any data defined for Hats On Pets Plus for this pet and breed ? If yes, go to the next step. If no, defer to vanilla logic (draw hats only on dogs and cats with vanilla values)
 2. Is there a data block specified for the current sprite and flipped value for this pet and breed ? If yes, use this block. If no, go to the next step
-3. Is there a block specified as default for this pet and breed ? If yes, use this block. If no, do not attempt to draw a hat 
+3. Is there a block specified as default for this pet and breed ? If yes, use this block. If no, either default to vanilla logic if it is an existing pet resprite or do not attempt to draw a hat
 
-#### 3.e Any additional question or issues ?
+#### 3.e How to reload the data without relaunching the game / How to use the hopp_reload command ?
+
+Version 1.0.2 of Hats On Pets Plus added a command to reload your custom hat data without having to relaunch your game everytime.  
+
+Follow these steps to reload your data (keep in mind that to doing this while you are in the main menu of the game might not work, as some of the framework data is only initialized once you have loaded a save file) :  
+
+1. Replace the content.json file (or at least the part that contain the EditData action related to curstom hat data on pets) in your Stardew Valley mod files (in Mods/YourMod) with the one you're currently working on
+2. In the SMAPI console (or in the ingame chat if you use the Chat Commands mod/tool), run the following command : `patch reload <yourModId>` . (This command tells Content Patcher to reload your data)
+3. In the same console, run the following command : `hopp_reload` .  (This command tells Hats On Pet Plus to empty his cache and go reload custom hat data from other mods)
+
+Tip : You can use the up/down arrow key in the console to navigate your command history, so you don't have to type out the whole command(s) everytime you want to use them (as long as you don't close the game).  
+
+#### 3.f Any additional question or issues ?
 
 If you have more questions on how to use the Hats On Pets Plus framework or encounter any issue, you can contact the author of the mod either on the Nexus Mod Page or on the community Stardew Valley discord server (@Syma).  
 I will try to keep this documentation up to date and expand on it (with more tips, examples, etc.) if some things feel confusing to other modders, so don't hesitate to give me feedback as well.
