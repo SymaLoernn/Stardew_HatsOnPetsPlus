@@ -1,6 +1,7 @@
 ﻿using StardewModdingAPI;
 using StardewModdingAPI.Events;
 using StardewValley;
+using StardewValley.Characters;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -45,21 +46,32 @@ namespace HatsOnPetsPlus
             Helper = helper;
 
             PetHatsPatch.Initialize(Monitor);
-            LoadCustomPetMods();
         }
 
-        internal static void LoadCustomPetMods()
+        internal static bool LoadCustomPetMods()
         {
-            var dict = Helper.GameContent.Load<Dictionary<string, ExternalPetModData[]>>(ModEntry.modContentPath);
-            Monitor.Log("HOPP Init : "+ dict.Count  +" mod(s) found", LogLevel.Trace);
-            foreach (KeyValuePair<string, ExternalPetModData[]> entry in dict)
+
+            try
             {
-                var moddedPets = entry.Value as ExternalPetModData[];
-                Monitor.Log("HOPP Init : Mod " + entry.Key + " loading, " + moddedPets.Length + " modded pets found", LogLevel.Trace);
-                foreach (ExternalPetModData moddedPet in moddedPets)
+                var dict = Helper.GameContent.Load<Dictionary<string, ExternalPetModData[]>>(ModEntry.modContentPath);
+
+                Monitor.Log("HOPP Init : " + dict.Count + " mod(s) found", LogLevel.Trace);
+                foreach (KeyValuePair<string, ExternalPetModData[]> entry in dict)
                 {
-                    PetHatsPatch.addPetToDictionnary(moddedPet);
+                    var moddedPets = entry.Value as ExternalPetModData[];
+                    Monitor.Log("HOPP Init : Mod " + entry.Key + " loading, " + moddedPets.Length + " modded pets found", LogLevel.Trace);
+                    foreach (ExternalPetModData moddedPet in moddedPets)
+                    {
+                        PetHatsPatch.addPetToDictionnary(moddedPet);
+                    }
                 }
+                return true;
+            }
+            catch (NullReferenceException ex)
+            {
+                // There isn't any content to load yet
+                Monitor.Log("Custom pet data for drawing hats could not be loaded !", LogLevel.Error);
+                return false;
             }
         }
 

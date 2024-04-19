@@ -35,6 +35,11 @@ namespace HatsOnPetsPlus
             customPetsDict[new Tuple<string, string>(petType, petBreed)] = pet;
         }
 
+        public static void resetDictionary()
+        {
+            customPetsDict.Clear();
+        }
+
         internal static bool DrawHatPrefix(SpriteBatch b, Vector2 shake, StardewValley.Characters.Pet __instance)
         {
             try

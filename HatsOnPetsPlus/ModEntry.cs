@@ -32,11 +32,29 @@ namespace HatsOnPetsPlus
             harmony.Patch(
                 original: AccessTools.Method(typeof(StardewValley.Characters.Pet), nameof(StardewValley.Characters.Pet.checkAction)),
                 postfix: new HarmonyMethod(typeof(PetHatsPatch), nameof(PetHatsPatch.CheckActionPostfix)));
+
+            helper.ConsoleCommands.Add("hopp_reload", "Reload the hat data dictionary from all mods data.\n Should be used after reloading your own mod in Content patcher with 'patch reload <modId>'.\n Won't work in the main menu, you need to have a save file loaded before using this command !", this.ReloadCustomPetMods);
+
+            HOPPHelperFunctions.Initialize(this.Monitor, helper);
+
+        }
+
+        private void ReloadCustomPetMods(string command, string[] args)
+        {
+            PetHatsPatch.resetDictionary();
+            if (HOPPHelperFunctions.LoadCustomPetMods())
+            {
+                this.Monitor.Log("Custom pet data for drawing hats reloaded !", LogLevel.Info);
+            } else
+            {
+                this.Monitor.Log("Make sure you have loaded a save file before using this command !", LogLevel.Error);
+            }
+            
         }
 
         private void OnSaveLoaded(object sender, SaveLoadedEventArgs e)
         {
-            HOPPHelperFunctions.Initialize(this.Monitor, helper);
+            HOPPHelperFunctions.LoadCustomPetMods();
         }
 
         private void OnAssetRequested(object sender, AssetRequestedEventArgs e)
