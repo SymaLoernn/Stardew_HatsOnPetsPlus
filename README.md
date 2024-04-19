@@ -140,7 +140,7 @@ When choosing which data to use, Hats On Pets Plus will check things in this ord
 
 Version 1.0.2 of Hats On Pets Plus added a command to reload your custom hat data without having to relaunch your game.  
 
-Follow these steps to reload your data (keep in mind that to doing this while you are in the main menu of the game might not work, as some of the framework data is only initialized once you have loaded a save file) :  
+Follow these steps to reload your data (keep in mind that doing this if you currently are in the main menu of the game might not work, as some of the framework data is only initialized once you have loaded a save file) :  
 
 1. Replace the content.json file (or at least the part that contain the EditData action related to custom hat data on pets) in your Stardew Valley mod files (in Mods/YourMod) with the one you're currently working on
 2. In the SMAPI console (or in the ingame chat if you use the Chat Commands mod/tool), run the following command : `patch reload <yourModId>` . (This command tells Content Patcher to reload your data)
