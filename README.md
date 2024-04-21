@@ -121,7 +121,9 @@ Specifically, the game makes use of the flipped flag on these specific sprites f
 Fortunately, in most cases it is simple to do so and takes only three steps :
 1. Copy paste the json block that you used for the non-flipped version of the sprite and add a `"Flipped":true` field in the pasted block.
 2. If you set the Direction as 1 or 3 in the data for the non-flipped version of the sprite (when the hat is facing right or left), change it so the hat is facing the opposite direction (1 -> 3 and 3 -> 1).
-3. Add or remove a minus sign to the hatOffsetX value (multiply it by -1). I recommend you to test this as depending on your sprite it might require some adjustment, but it should as least be a good starting point.
+3. Add or remove a minus sign to the hatOffsetX value (multiply it by -1), then substract 4 from the resulting value if it is different from 0 (For instance, a non-flipped hatOffsetX value of 20 should become a hatOffsetX value of -24).
+
+I recommend you to test and see if the flipped sprites look good, as depending on your sprite it might require some additional adjustment, but it should at least serve as a good starting point.
 
 #### 3.d How does the default flag work ?
 
@@ -134,7 +136,7 @@ When choosing which data to use, Hats On Pets Plus will check things in this ord
 
 1. Is this any data defined for Hats On Pets Plus for this pet and breed ? If yes, go to the next step. If no, defer to vanilla logic (draw hats only on dogs and cats with vanilla values)
 2. Is there a data block specified for the current sprite and flipped value for this pet and breed ? If yes, use this block. If no, go to the next step
-3. Is there a block specified as default for this pet and breed ? If yes, use this block. If no, either default to vanilla logic if it is an existing pet resprite or do not attempt to draw a hat
+3. Is there a block specified as default for this pet and breed ? If yes, use this block. If no, default to the vanilla logic (which means trying to draw a hat with vanilla data on horses, cats and dogs, and do not attempt to draw a hat on any other pet)
 
 #### 3.e How to reload the data without relaunching the game / How to use the hopp_reload command ?
 
@@ -157,7 +159,7 @@ I will try to keep this documentation up to date and expand on it (with more tip
 
 Mod author : Syma  
 Mod contributor : Elizabethcd  
-For their help : Elizabethcd, the wonderful people of the Stardew Valley modding channel on the official Discord server
+For their help : Elizabethcd, the wonderful people of the Stardew Valley modding channel on the community Discord server
 
 ## Current and future TODO list
 
