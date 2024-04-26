@@ -45,7 +45,7 @@ namespace HatsOnPetsPlus
             Monitor = monitor;
             Helper = helper;
 
-            PetHatsPatch.Initialize(Monitor);
+            PetHatsPatch.Initialize(Monitor, Helper);
         }
 
         internal static bool LoadCustomPetMods()
@@ -55,11 +55,12 @@ namespace HatsOnPetsPlus
             {
                 var dict = Helper.GameContent.Load<Dictionary<string, ExternalPetModData[]>>(ModEntry.modContentPath);
 
+                PetHatsPatch.resetDictionary();
                 Monitor.Log("HOPP Init : " + dict.Count + " mod(s) found", LogLevel.Trace);
                 foreach (KeyValuePair<string, ExternalPetModData[]> entry in dict)
                 {
                     var moddedPets = entry.Value as ExternalPetModData[];
-                    Monitor.Log("HOPP Init : Mod " + entry.Key + " loading, " + moddedPets.Length + " modded pets found", LogLevel.Trace);
+                    Monitor.Log("HOPP Init : Mod " + entry.Key + " loading, " + moddedPets.Length + " modded pet(s) found", LogLevel.Trace);
                     foreach (ExternalPetModData moddedPet in moddedPets)
                     {
                         PetHatsPatch.addPetToDictionnary(moddedPet);
@@ -80,6 +81,14 @@ namespace HatsOnPetsPlus
             if (e.NameWithoutLocale.IsEquivalentTo(ModEntry.modContentPath))
             {
                 e.LoadFrom(() => new Dictionary<string, ExternalPetModData[]>(), AssetLoadPriority.Exclusive);
+            }
+        }
+
+        internal static void Content_AssetReady(AssetReadyEventArgs e)
+        {
+            if (e.NameWithoutLocale.IsEquivalentTo(ModEntry.modContentPath))
+            {
+                LoadCustomPetMods();
             }
         }
     }

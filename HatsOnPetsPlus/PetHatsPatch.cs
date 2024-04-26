@@ -17,11 +17,13 @@ namespace HatsOnPetsPlus
     {
 
         private static IMonitor Monitor;
+        private static IModHelper Helper;
         public static Dictionary<Tuple<string, string>, PetData> customPetsDict = new Dictionary<Tuple<string, string>, PetData>();
 
-        internal static void Initialize(IMonitor monitor)
+        internal static void Initialize(IMonitor monitor, IModHelper helper)
         {
             Monitor = monitor;
+            Helper = helper;
         }
 
         public static void addPetToDictionnary(ExternalPetModData moddedPet)
@@ -45,6 +47,10 @@ namespace HatsOnPetsPlus
             try
             {
                 //Monitor.Log("Entered draw hat prefix function", LogLevel.Debug);
+
+                // Checks if the data asset has new data, and reload the customPetsDicts if that's the case
+                // Must be before the hat check so that it also updates the logic in CheckActionPostFix if there is no hat to draw
+                Helper.GameContent.Load<Dictionary<string, ExternalPetModData[]>>(ModEntry.modContentPath);
 
                 if (__instance.hat.Value == null)
                 {

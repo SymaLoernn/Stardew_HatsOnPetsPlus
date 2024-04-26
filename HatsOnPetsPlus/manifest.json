@@ -6,5 +6,5 @@
   "UniqueID": "Syma.HatsOnPetsPlus",
   "EntryDll": "HatsOnPetsPlus.dll",
   "MinimumApiVersion": "3.0.0",
-  "UpdateKeys": [ "GitHub:SymaLoernn/Stardew_HatsOnPetsPlus", "Nexus:22631" ]
+  "UpdateKeys": [ "Nexus:22631", "GitHub:SymaLoernn/Stardew_HatsOnPetsPlus" ]
 }
