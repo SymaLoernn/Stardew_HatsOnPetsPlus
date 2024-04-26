@@ -134,15 +134,16 @@ This functionnality might get expanded in the future to allow multiple default b
 
 When choosing which data to use, Hats On Pets Plus will check things in this order :  
 
-1. Is this any data defined for Hats On Pets Plus for this pet and breed ? If yes, go to the next step. If no, defer to vanilla logic (draw hats only on dogs and cats with vanilla values)
+1. Is there any data defined for Hats On Pets Plus specifically for this pet and breed ? If yes, go to the next step. If no, defer to vanilla logic (draw hats only on cats and dogs with vanilla values)
 2. Is there a data block specified for the current sprite and flipped value for this pet and breed ? If yes, use this block. If no, go to the next step
-3. Is there a block specified as default for this pet and breed ? If yes, use this block. If no, default to the vanilla logic (which means trying to draw a hat with vanilla data on horses, cats and dogs, and do not attempt to draw a hat on any other pet)
+3. Is there a block specified as default for this pet and breed ? If yes, use this block. If no, default to the vanilla logic for drawing hats (which means trying to draw a hat with vanilla data for cats and dogs, and to draw a hat with some vanilla default value for other pets)
 
 #### 3.e How to reload the data without relaunching the game ?
 
 Version 1.0.3 of Hats On Pets Plus simplified how to reload your custom hat data !  
 
-In order to reload your data once you have modified it in the game mods folder, you only need to run the following command : `patch reload <yourModId>` in the SMAPI console.
+In order to reload your data once you have modified it in the game mods folder, you only need to run the following command in the SMAPI console :   
+`patch reload <yourModId>`
 
 (If you still use version 1.0.2 of Hats On Pets Plus, you also need to run the 'hopp_reload' command that was made obsolete and removed in v1.0.3, but I suggest that you update Hats On Pets Plus to the latest version)
 
