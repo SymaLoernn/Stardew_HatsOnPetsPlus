@@ -20,7 +20,9 @@ namespace HatsOnPetsPlus
             public string Type { get; set; }
 
             // breeds are usually numbered 0 to 4, except for turtles that are 0 and 1 only
-            public string BreedId { get; set; }
+            public string? BreedId { get; set; }
+
+            public string[]? BreedIdList { get; set; }
 
             public ExternalSpriteModData[] Sprites { get; set; }
         }
@@ -60,10 +62,10 @@ namespace HatsOnPetsPlus
                 foreach (KeyValuePair<string, ExternalPetModData[]> entry in dict)
                 {
                     var moddedPets = entry.Value as ExternalPetModData[];
-                    Monitor.Log("HOPP Init : Mod " + entry.Key + " loading, " + moddedPets.Length + " modded pet(s) found", LogLevel.Trace);
+                    Monitor.Log("HOPP Init : Mod " + entry.Key + " loading, " + moddedPets.Length + " entrie(s) found", LogLevel.Trace);
                     foreach (ExternalPetModData moddedPet in moddedPets)
                     {
-                        PetHatsPatch.addPetToDictionnary(moddedPet);
+                        PetHatsPatch.addPetToDictionnary(moddedPet, entry.Key);
                     }
                 }
                 return true;
