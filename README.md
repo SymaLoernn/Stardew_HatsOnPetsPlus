@@ -35,6 +35,11 @@ The data for drawing hats on your custom Pet and Breed is represented in the fol
 {
     "Type": <Type>,
     "BreedId": <BreedId>,
+    "BreedIdList": [
+        <BreedId1>,
+        <BreedId2>,
+        ...
+    ]
     "Sprites": [
         {
             "SpriteId": <SpriteId>,
@@ -55,7 +60,9 @@ Signification of each field :
 | Field Name | Field Type | Optional | Default value | Description                                          |
 | :------------------ | :------: | :----: | ----: | :---- |
 | Type       | String | **No** | - | The pet Type, can be "Cat", "Dog" (case sensitive) or any other vanilla or custom pet type |
-| BreedId       | String | **No** | - | The breed ID of the pet, for vanilla pets it's a number in a string (ex : "2") |
+|        |  | | | **You must set at least one of the two following fields** (if both are set, they will both be used) |
+| BreedId       | String | **Partially** | - | The breed ID of the pet, for vanilla pets it's a number in a string (ex: `"2"`) |
+| BreedIdList       | String Array | **Partially** | - | An array of breed IDs, if you want to set hat data for multiple breeds at once (ex: `["0","1", ...]`) |
 | **For each sprite :** | | | | |
 | SpriteId       | Int | **No** | - | The sprite number on the sprite sheet (it starts from 0 on the upper left corner and goes left to right then top to bottom) |
 | HatOffSetX       | Float | Yes | 0 | The X offset of the hat from the center of the sprite, can be negative |
